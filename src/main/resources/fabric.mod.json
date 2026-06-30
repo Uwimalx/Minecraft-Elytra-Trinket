@@ -3,7 +3,7 @@
 	"id": "${id}",
 	"version": "${version}",
 	"name": "Elytra Trinket Updated",
-	"description": "A Minecraft Fabric mod that adds the Elytra to the cape slot in the Trinkets API. Updated to version 1.21.10!",
+	"description": "A Minecraft Fabric mod that adds the Elytra to the cape slot in the Trinkets API. Updated to version 26.2!",
 	"authors": [
 		{
 			"name": "Regexion",

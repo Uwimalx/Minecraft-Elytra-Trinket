@@ -1,5 +1,5 @@
 plugins {
-	id "fabric-loom" version "${loom_version}"
+	id "net.fabricmc.fabric-loom" version "${loom_version}"
 	id "maven-publish"
 	id "com.modrinth.minotaur" version "2.+"
 }
@@ -13,6 +13,11 @@ repositories {
 	maven {
 		name = "Ladysnake Libs"
 		url = "https://maven.ladysnake.org/releases"
+	}
+
+	maven {
+		name = "Nucleoid"
+		url = "https://maven.nucleoid.xyz/releases"
 	}
 
 	exclusiveContent {
@@ -44,9 +49,6 @@ dependencies {
 	// Minecraft
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-	// Yarn
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-
 	// Fabric
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
@@ -56,8 +58,8 @@ dependencies {
 	}
 	modLocalRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}" // Required for testing because Trinkets expects "fabric-api" to be present.
 
-	// Trinkets Canary
-	modImplementation "maven.modrinth:trinkets-canary:${project.trinkets_api_version}"
+	// Trinkets Updated
+	modImplementation "eu.pb4:trinkets:${project.trinkets_api_version}"
 
 	// Cardinal Components API
 	modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
@@ -110,7 +112,7 @@ modrinth {
 	additionalFiles = [sourcesJar]
 	dependencies {
 		required.project "fabric-api"
-		required.project "trinkets-canary"
+		required.project "trinkets-updated"
 	}
 	syncBodyFrom = rootProject.file("README.md").text
 }
