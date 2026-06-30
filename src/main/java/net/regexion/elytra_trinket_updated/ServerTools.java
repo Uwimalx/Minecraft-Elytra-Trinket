@@ -2,19 +2,18 @@ package net.regexion.elytra_trinket_updated;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.TrinketComponent;
-import dev.emi.trinkets.api.TrinketsApi;
+import eu.pb4.trinkets.api.TrinketAttachment;
+import eu.pb4.trinkets.api.TrinketSlotAccess;
+import eu.pb4.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.Pair;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 
 /** Server- and client-side methods for Elytra Trinket. */
 public final class ServerTools {
@@ -25,8 +24,8 @@ public final class ServerTools {
 	 * @return Whether the given item stack contains a usable Elytra.
 	 */
 	private static boolean isUsableElytra(ItemStack stack) {
-		return stack != null && !stack.isEmpty() && !stack.shouldBreak() && !stack.willBreakNextUse()
-				&& stack.isOf(Items.ELYTRA);
+		return stack != null && !stack.isEmpty() && stack.getDamageValue() < stack.getMaxDamage()
+				&& stack.is(Items.ELYTRA);
 	}
 
 	/**
@@ -38,7 +37,7 @@ public final class ServerTools {
 	 * @return Whether  the entity was made to fly.
 	 */
 	private static boolean useElytraTrinket(LivingEntity entity, ItemStack stack, boolean doTick) {
-		if (!ServerTools.isUsableElytra(stack) || !(entity instanceof PlayerEntity playerEntity)) {
+		if (!ServerTools.isUsableElytra(stack) || !(entity instanceof Player playerEntity)) {
 			return false;
 		}
 
@@ -46,14 +45,14 @@ public final class ServerTools {
 			return true;
 		}
 
-		int nextRoll = entity.getGlidingTicks() + 1;
-		World world = entity.getEntityWorld();
-		if (!world.isClient() && nextRoll % 10 == 0) {
+		int nextRoll = entity.getFallFlyingTicks() + 1;
+		Level world = entity.level();
+		if (!world.isClientSide() && nextRoll % 10 == 0) {
 			if ((nextRoll / 10) % 2 == 0) {
-				stack.damage(1, playerEntity);
+				stack.hurtAndBreak(1, entity, EquipmentSlot.CHEST);
 			}
 
-			entity.emitGameEvent(GameEvent.ELYTRA_GLIDE);
+			entity.gameEvent(GameEvent.ELYTRA_GLIDE);
 		}
 
 		return true;
@@ -83,22 +82,17 @@ public final class ServerTools {
 	public static List<ItemStack> getEquippedElytraTrinkets(LivingEntity entity) {
 		List<ItemStack> out = new ArrayList<>();
 
-		// Return an empty list if the trinket component isn't present.
-		Optional<TrinketComponent> optional = TrinketsApi.getTrinketComponent(entity);
-		if (optional.isEmpty()) {
-			return out;
-		}
+		TrinketAttachment attachment = TrinketsApi.getAttachment(entity);
 
 		// Check each trinket slot with an Elytra.
-		TrinketComponent trinketComponent = optional.get();
-		for (Pair<SlotReference, ItemStack> pair : trinketComponent.getEquipped(Items.ELYTRA)) {
+		for (TrinketSlotAccess slotAccess : attachment.equipped(Items.ELYTRA, false)) {
 			// Skip slots that can't hold Elytra.
-			if (!pair.getLeft().inventory().getSlotType().getName().equals("back")) {
+			if (!slotAccess.slotType().getId().equals("back")) {
 				continue;
 			}
 
 			// Skip empty stacks.
-			ItemStack stack = pair.getRight();
+			ItemStack stack = slotAccess.get();
 			if (stack == null || stack.isEmpty()) {
 				continue;
 			}
