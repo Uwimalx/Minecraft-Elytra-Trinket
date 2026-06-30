@@ -3,8 +3,8 @@ package net.regexion.elytra_trinket_updated;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRenderEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.render.entity.player.PlayerEntityRenderer;
+import net.minecraft.world.entity.LivingEntity;
 
 /** Client-side methods for Elytra Trinket. */
 public final class ClientTools {
