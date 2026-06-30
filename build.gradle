@@ -50,20 +50,20 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
 	// Fabric
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API
 	["fabric-entity-events-v1", "fabric-rendering-v1"].each {
-		module -> modImplementation(fabricApi.module(module, project.fabric_api_version))
+		module -> implementation(fabricApi.module(module, project.fabric_api_version))
 	}
-	modLocalRuntime "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}" // Required for testing because Trinkets expects "fabric-api" to be present.
+	runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}" // Required for testing because Trinkets expects "fabric-api" to be present.
 
 	// Trinkets Updated
-	modImplementation "eu.pb4:trinkets:${project.trinkets_api_version}"
+	implementation "eu.pb4:trinkets:${project.trinkets_api_version}"
 
 	// Cardinal Components API
-	modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
-	modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cca_version}"
+	implementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${cca_version}"
+	implementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${cca_version}"
 }
 
 processResources {
