@@ -7,6 +7,7 @@ import eu.pb4.trinkets.api.TrinketAttachment;
 import eu.pb4.trinkets.api.TrinketSlotAccess;
 import eu.pb4.trinkets.api.TrinketsApi;
 import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -23,7 +24,7 @@ public final class ServerTools {
 	 * @return Whether the given item stack contains a usable Elytra.
 	 */
 	private static boolean isUsableElytra(ItemStack stack) {
-		return stack != null && !stack.isEmpty() && !stack.shouldBreak() && !stack.willBreakNextUse()
+		return stack != null && !stack.isEmpty() && stack.getDamageValue() < stack.getMaxDamage()
 				&& stack.is(Items.ELYTRA);
 	}
 
@@ -44,14 +45,14 @@ public final class ServerTools {
 			return true;
 		}
 
-		int nextRoll = entity.getGlidingTicks() + 1;
+		int nextRoll = entity.getFallFlyingTicks() + 1;
 		Level world = entity.level();
 		if (!world.isClientSide() && nextRoll % 10 == 0) {
 			if ((nextRoll / 10) % 2 == 0) {
-				stack.hurtAndBreak(1, world, playerEntity);
+				stack.hurtAndBreak(1, entity, EquipmentSlot.CHEST);
 			}
 
-			entity.emitGameEvent(GameEvent.ELYTRA_GLIDE);
+			entity.gameEvent(GameEvent.ELYTRA_GLIDE);
 		}
 
 		return true;
@@ -86,7 +87,7 @@ public final class ServerTools {
 		// Check each trinket slot with an Elytra.
 		for (TrinketSlotAccess slotAccess : attachment.equipped(Items.ELYTRA, false)) {
 			// Skip slots that can't hold Elytra.
-			if (!slotAccess.slotType().getName().equals("back")) {
+			if (!slotAccess.slotType().getId().equals("back")) {
 				continue;
 			}
 

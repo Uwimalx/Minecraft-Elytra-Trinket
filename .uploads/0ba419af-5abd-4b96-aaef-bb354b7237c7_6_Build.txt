@@ -1,0 +1,114 @@
+﻿2026-06-30T02:23:34.0565248Z ##[group]Run ./gradlew build
+2026-06-30T02:23:34.0565549Z [36;1m./gradlew build[0m
+2026-06-30T02:23:34.0595314Z shell: /usr/bin/bash -e {0}
+2026-06-30T02:23:34.0595556Z env:
+2026-06-30T02:23:34.0595823Z   JAVA_HOME: /opt/hostedtoolcache/Java_Microsoft_jdk/25.0.0/x64
+2026-06-30T02:23:34.0596257Z   JAVA_HOME_25_X64: /opt/hostedtoolcache/Java_Microsoft_jdk/25.0.0/x64
+2026-06-30T02:23:34.0596603Z ##[endgroup]
+2026-06-30T02:23:34.1348685Z Downloading https://services.gradle.org/distributions/gradle-9.5.0-bin.zip
+2026-06-30T02:23:36.0065278Z .............10%.............20%..............30%.............40%.............50%..............60%.............70%..............80%.............90%.............100%
+2026-06-30T02:23:37.1397980Z 
+2026-06-30T02:23:37.1399349Z Welcome to Gradle 9.5.0!
+2026-06-30T02:23:37.1399721Z 
+2026-06-30T02:23:37.1400075Z Here are the highlights of this release:
+2026-06-30T02:23:37.1401683Z  - Task provenance in reports and failure messages
+2026-06-30T02:23:37.1403428Z  - Type-safe accessors for precompiled Kotlin Settings plugins
+2026-06-30T02:23:37.1404040Z 
+2026-06-30T02:23:37.1424236Z For more details see https://docs.gradle.org/9.5.0/release-notes.html
+2026-06-30T02:23:37.1424837Z 
+2026-06-30T02:23:37.2390246Z Starting a Gradle Daemon (subsequent builds will be faster)
+2026-06-30T02:23:51.4394447Z 
+2026-06-30T02:23:51.4434908Z > Configure project :
+2026-06-30T02:23:51.4435789Z Fabric Loom: 1.17.13
+2026-06-30T02:24:28.2415753Z /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:26: error: cannot find symbol
+2026-06-30T02:24:28.2417076Z 
+2026-06-30T02:24:28.2445104Z 		return stack != null && !stack.isEmpty() && !stack.shouldBreak() && !stack.willBreakNextUse()
+2026-06-30T02:24:28.2445934Z > Task :compileJava
+2026-06-30T02:24:28.2474048Z 		                                                  ^
+2026-06-30T02:24:28.2503372Z   symbol:   method shouldBreak()
+2026-06-30T02:24:28.2533326Z   location: variable stack of type ItemStack
+2026-06-30T02:24:28.2557722Z /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:26: error: cannot find symbol
+2026-06-30T02:24:28.2603780Z 		return stack != null && !stack.isEmpty() && !stack.shouldBreak() && !stack.willBreakNextUse()
+2026-06-30T02:24:28.2604744Z 		                                                                          ^
+2026-06-30T02:24:28.2609237Z   symbol:   method willBreakNextUse()
+2026-06-30T02:24:28.2610054Z   location: variable stack of type ItemStack
+2026-06-30T02:24:28.3391414Z /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:47: error: cannot find symbol
+2026-06-30T02:24:28.3453643Z 		int nextRoll = entity.getGlidingTicks() + 1;
+2026-06-30T02:24:28.3454318Z 		                     ^
+2026-06-30T02:24:28.3476891Z   symbol:   method getGlidingTicks()
+2026-06-30T02:24:28.3533677Z   location: variable entity of type LivingEntity
+2026-06-30T02:24:28.3545257Z /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:51: error: no suitable method found for hurtAndBreak(int,Level,Player)
+2026-06-30T02:24:28.3556346Z 				stack.hurtAndBreak(1, world, playerEntity);
+2026-06-30T02:24:28.3578435Z 				     ^
+2026-06-30T02:24:28.3603889Z     method TrinketsItemStackExtension.hurtAndBreak(int,LivingEntity,TrinketSlotAccess) is not applicable
+2026-06-30T02:24:28.3633538Z       (argument mismatch; Level cannot be converted to LivingEntity)
+2026-06-30T02:24:28.3636123Z     method ItemStack.hurtAndBreak(int,LivingEntity,InteractionHand) is not applicable
+2026-06-30T02:24:28.3675207Z       (argument mismatch; Level cannot be converted to LivingEntity)
+2026-06-30T02:24:28.3693653Z     method ItemStack.hurtAndBreak(int,LivingEntity,EquipmentSlot) is not applicable
+2026-06-30T02:24:28.3743636Z       (argument mismatch; Level cannot be converted to LivingEntity)
+2026-06-30T02:24:28.3758765Z /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:54: error: cannot find symbol
+2026-06-30T02:24:28.3780946Z 			entity.emitGameEvent(GameEvent.ELYTRA_GLIDE);
+2026-06-30T02:24:28.3803352Z 			      ^
+2026-06-30T02:24:28.3833491Z   symbol:   method emitGameEvent(Reference<GameEvent>)
+2026-06-30T02:24:28.3834309Z   location: variable entity of type LivingEntity
+2026-06-30T02:24:28.3865687Z /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:89: error: cannot find symbol
+2026-06-30T02:24:28.3868875Z 			if (!slotAccess.slotType().getName().equals("back")) {
+2026-06-30T02:24:28.3903295Z 			                          ^
+2026-06-30T02:24:28.3923400Z   symbol:   method getName()
+2026-06-30T02:24:28.3923889Z   location: interface SlotType
+2026-06-30T02:24:28.3924680Z Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+2026-06-30T02:24:28.3925487Z 6 errors
+2026-06-30T02:24:28.4392037Z 
+2026-06-30T02:24:28.4403212Z 
+2026-06-30T02:24:28.4419421Z > Task :compileJava FAILED
+2026-06-30T02:24:28.4421641Z 
+2026-06-30T02:24:28.4423349Z [Incubating] Problems report is available at: file:///home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/build/reports/problems/problems-report.html
+2026-06-30T02:24:28.4424785Z FAILURE: Build failed with an exception.
+2026-06-30T02:24:28.4425593Z 1 actionable task: 1 executed
+2026-06-30T02:24:28.4493202Z 
+2026-06-30T02:24:28.4521842Z * What went wrong:
+2026-06-30T02:24:28.4553723Z Execution failed for task ':compileJava' (registered by plugin class 'org.gradle.api.plugins.JavaBasePlugin').
+2026-06-30T02:24:28.4554885Z > Compilation failed; see the compiler output below.
+2026-06-30T02:24:28.4584406Z   /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:51: error: no suitable method found for hurtAndBreak(int,Level,Player)
+2026-06-30T02:24:28.4613239Z   				stack.hurtAndBreak(1, world, playerEntity);
+2026-06-30T02:24:28.4639106Z   				     ^
+2026-06-30T02:24:28.4654034Z       method TrinketsItemStackExtension.hurtAndBreak(int,LivingEntity,TrinketSlotAccess) is not applicable
+2026-06-30T02:24:28.4680088Z         (argument mismatch; Level cannot be converted to LivingEntity)
+2026-06-30T02:24:28.4687601Z       method ItemStack.hurtAndBreak(int,LivingEntity,InteractionHand) is not applicable
+2026-06-30T02:24:28.4713411Z         (argument mismatch; Level cannot be converted to LivingEntity)
+2026-06-30T02:24:28.4733808Z       method ItemStack.hurtAndBreak(int,LivingEntity,EquipmentSlot) is not applicable
+2026-06-30T02:24:28.4763538Z         (argument mismatch; Level cannot be converted to LivingEntity)
+2026-06-30T02:24:28.4777778Z   Note: Some messages have been simplified; recompile with -Xdiags:verbose to get full output
+2026-06-30T02:24:28.4785745Z   /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:26: error: cannot find symbol
+2026-06-30T02:24:28.4813450Z   		return stack != null && !stack.isEmpty() && !stack.shouldBreak() && !stack.willBreakNextUse()
+2026-06-30T02:24:28.4844141Z   		                                                  ^
+2026-06-30T02:24:28.4845493Z     symbol:   method shouldBreak()
+2026-06-30T02:24:28.4856419Z     location: variable stack of type ItemStack
+2026-06-30T02:24:28.4859735Z   /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:26: error: cannot find symbol
+2026-06-30T02:24:28.4861582Z   		return stack != null && !stack.isEmpty() && !stack.shouldBreak() && !stack.willBreakNextUse()
+2026-06-30T02:24:28.4862412Z   		                                                                          ^
+2026-06-30T02:24:28.4863196Z     symbol:   method willBreakNextUse()
+2026-06-30T02:24:28.4863721Z     location: variable stack of type ItemStack
+2026-06-30T02:24:28.4865266Z   /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:47: error: cannot find symbol
+2026-06-30T02:24:28.4866792Z   		int nextRoll = entity.getGlidingTicks() + 1;
+2026-06-30T02:24:28.4867315Z   		                     ^
+2026-06-30T02:24:28.4867704Z     symbol:   method getGlidingTicks()
+2026-06-30T02:24:28.4868208Z     location: variable entity of type LivingEntity
+2026-06-30T02:24:28.4869554Z   /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:54: error: cannot find symbol
+2026-06-30T02:24:28.4870901Z   			entity.emitGameEvent(GameEvent.ELYTRA_GLIDE);
+2026-06-30T02:24:28.4871391Z   			      ^
+2026-06-30T02:24:28.4871792Z     symbol:   method emitGameEvent(Reference<GameEvent>)
+2026-06-30T02:24:28.4872387Z     location: variable entity of type LivingEntity
+2026-06-30T02:24:28.4873986Z   /home/runner/work/Minecraft-Elytra-Trinket/Minecraft-Elytra-Trinket/src/main/java/net/regexion/elytra_trinket_updated/ServerTools.java:89: error: cannot find symbol
+2026-06-30T02:24:28.4875349Z   			if (!slotAccess.slotType().getName().equals("back")) {
+2026-06-30T02:24:28.4875875Z   			                          ^
+2026-06-30T02:24:28.4876265Z     symbol:   method getName()
+2026-06-30T02:24:28.4876663Z     location: interface SlotType
+2026-06-30T02:24:28.4877046Z   6 errors
+2026-06-30T02:24:28.4877352Z 
+2026-06-30T02:24:28.4877473Z * Try:
+2026-06-30T02:24:28.4877938Z > Check your code and dependencies to fix the compilation error(s)
+2026-06-30T02:24:28.4878746Z > Run with --scan to get full insights from a Build Scan (powered by Develocity).
+2026-06-30T02:24:28.4879284Z 
+2026-06-30T02:24:28.4879414Z BUILD FAILED in 54s
+2026-06-30T02:24:28.9226097Z ##[error]Process completed with exit code 1.
