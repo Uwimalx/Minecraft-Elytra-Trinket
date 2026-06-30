@@ -3,108 +3,78 @@ package net.regexion.elytra_trinket_updated;
 import java.util.List;
 import java.util.Optional;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.equipment.EquipmentModel;
-import net.minecraft.client.render.entity.equipment.EquipmentRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.ElytraEntityModel;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.LoadedEntityModels;
-import net.minecraft.client.render.entity.state.BipedEntityRenderState;
-import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.EquippableComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.model.ElytraModel;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.state.BipedRenderState;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.core.component.DataComponentTypes;
+import net.minecraft.core.component.EquippableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.item.equipment.EquipmentAsset;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.world.item.EquipmentAsset;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.entity.EquipmentRenderer;
+import net.minecraft.client.renderer.entity.equipment.EquipmentModel;
 
 /**
  * A feature renderer for an Elytra trinket. This class is almost functionally
  * identical to
  * {@link net.minecraft.client.render.entity.feature.ElytraFeatureRenderer}.
  */
-public class ElytraTrinketFeatureRenderer<S extends BipedEntityRenderState, M extends EntityModel<S>>
-		extends FeatureRenderer<S, M> {
-	/** The Elytra entity model. */
-	private final ElytraEntityModel model;
-
-	/** The Elytra entity model for babies. */
-	private final ElytraEntityModel babyModel;
-
-	/** The equipment renderer that is used to render the Elytra. */
+public class ElytraTrinketFeatureRenderer<S extends BipedRenderState, M extends EntityModel<S>>
+		extends RenderLayer<S, M> {
+	private final ElytraModel model;
+	private final ElytraModel babyModel;
 	private final EquipmentRenderer renderer;
 
-	/**
-	 * Create an Elytra trinket feature renderer.
-	 * 
-	 * @param context  The renderer of the entity.
-	 * @param loader   The model loader to use to load the Elytra model.
-	 * @param renderer The equipment renderer that is used to render the Elytra.
-	 */
-	public ElytraTrinketFeatureRenderer(FeatureRendererContext<S, M> context, LoadedEntityModels loader,
-			EquipmentRenderer renderer) {
+	public ElytraTrinketFeatureRenderer(RenderLayerParent<S, M> context, EquipmentRenderer renderer) {
 		super(context);
-		this.model = new ElytraEntityModel(loader.getModelPart(EntityModelLayers.ELYTRA));
-		this.babyModel = new ElytraEntityModel(loader.getModelPart(EntityModelLayers.ELYTRA_BABY));
+		this.model = new ElytraModel(ModelLayers.ELYTRA);
+		this.babyModel = new ElytraModel(ModelLayers.ELYTRA_BABY);
 		this.renderer = renderer;
 	}
 
-	/**
-	 * Render the Elytra trinket when necessary.
-	 * 
-	 * @param matrices     The current transformation matrix stack for the renderer.
-	 * @param vertices     The vertex consumer provider.
-	 * @param light        The light value to render with.
-	 * @param state        The entity to render onto.
-	 * @param limbAngle    The angle to the relevant limb.
-	 * @param limbDistance The distance to the relevant limb.
-	 */
 	@Override
-	public void render(MatrixStack matrices, OrderedRenderCommandQueue vertices, int light, S state, float limbAngle,
+	public void submit(PoseStack matrices, SubmitNodeCollector vertices, int light, S state, float limbAngle,
                        float limbDistance) {
-		// Get the player entity state.
-		if (!(state instanceof PlayerEntityRenderState playerState)) {
+		if (!(state instanceof PlayerRenderState playerState)) {
 			return;
 		}
 
-		// Get the world.
-		MinecraftClient client = MinecraftClient.getInstance();
-		if (client.world == null) {
+		Minecraft client = Minecraft.getInstance();
+		if (client.level == null) {
 			return;
 		}
 
-		// Get the entity.
-		Entity entity = client.world.getEntityById(playerState.id);
+		Entity entity = client.level.getEntityById(playerState.id);
 		if (!(entity instanceof LivingEntity livingEntity)) {
 			return;
 		}
 
-		// Get the stack of the Elytra trinket.
 		List<ItemStack> stacks = ServerTools.getEquippedElytraTrinkets(livingEntity);
 		if (stacks.isEmpty()) {
 			return;
 		}
 		ItemStack stack = stacks.getFirst();
 
-		// Get the equippable component asset ID.
 		EquippableComponent equippableComponent = stack.get(DataComponentTypes.EQUIPPABLE);
 		if (equippableComponent == null) {
 			return;
 		}
-		Optional<RegistryKey<EquipmentAsset>> optionalAssetId = equippableComponent.assetId();
+		Optional<ResourceKey<EquipmentAsset>> optionalAssetId = equippableComponent.assetId();
 		if (optionalAssetId.isEmpty()) {
 			return;
 		}
-		RegistryKey<EquipmentAsset> assetId = optionalAssetId.get();
+		ResourceKey<EquipmentAsset> assetId = optionalAssetId.get();
 
-		// Get the texture of the Elytra.
 		Identifier identifier = null;
 		Identifier elytraTexture = null;
         Identifier capeTexture = null;
@@ -121,14 +91,13 @@ public class ElytraTrinketFeatureRenderer<S extends BipedEntityRenderState, M ex
 				identifier = capeTexture;
 			}
 		}
-		ElytraEntityModel model = state.baby ? this.babyModel : this.model;
+		ElytraModel model = state.baby ? this.babyModel : this.model;
 
-		// Render the Elytra.
-		matrices.push();
+		matrices.pushPose();
 		matrices.translate(0, 0, 0.125);
-		model.setAngles(state);
+		model.setupAnim(state);
 		this.renderer.render(EquipmentModel.LayerType.WINGS, assetId, model, state, stack, matrices, vertices, light,
 				identifier, state.outlineColor, 0);
-		matrices.pop();
+		matrices.popPose();
 	}
 }

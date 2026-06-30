@@ -55,7 +55,7 @@ dependencies {
 	["fabric-entity-events-v1", "fabric-rendering-v1"].each {
 		module -> implementation(fabricApi.module(module, project.fabric_api_version))
 	}
-	runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}" // Required for testing because Trinkets expects "fabric-api" to be present.
+	runtimeOnly "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	// Trinkets Updated
 	implementation "eu.pb4:trinkets:${project.trinkets_api_version}"
